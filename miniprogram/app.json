@@ -10,11 +10,12 @@
     "navigationBarTextStyle": "black"
   },
   "usingComponents": {
-    "van-button": "vant-weapp/button",
-    "van-popup": "vant-weapp/popup",
+    "van-button": "@vant/weapp/button",
+    "van-popup": "@vant/weapp/popup",
     "van-divider": "@vant/weapp/divider",
-    "van-cell": "vant-weapp/cell",
-    "van-cell-group": "vant-weapp/cell-group"
+    "van-cell": "@vant/weapp/cell",
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-skeleton": "@vant/weapp/skeleton"
   },
   "sitemapLocation": "sitemap57.json"
 }

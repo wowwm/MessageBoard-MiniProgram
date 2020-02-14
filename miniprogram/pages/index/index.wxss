@@ -15,14 +15,17 @@
   display: flex;
   width: 100%;
   border-bottom: 1rpx solid #eee;
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
 }
 .msgText{
-   display: flex;
-   flex-direction: column;
-   width: 90%;
-   margin-bottom: 30rpx;
-   word-wrap:break-word
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 20rpx;
+  word-wrap:break-word
+}
+.nameText{
+  font-weight: 600;
 }
 .textArea{
   background-color: #F6F6F6;

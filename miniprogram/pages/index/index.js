@@ -8,32 +8,20 @@ Page({
     show: false,
     maxNumber: 140,//可输入最大字数
     number: 0,//已输入字数
+    loading: true,
+    textValue:"",
 
     //留言数据
-    nickName:"",
+    name:"",
     imageSrc:"",
     text:"",
 
-
-
     msgList:[
       {
-        id:"001",
+        _id:"001",
         imageSrc:"../../images/Rock.png",
         name:"Mengo",
         text:"留言测试1"
-      },
-      {
-        id: "002",
-        imageSrc: "../../images/Baba.png",
-        name: "Mike",
-        text: "留言测试23xfffffffffffffffffffff怎么让小程序text自动换行?小程序text自动换行方该怎么做?下面小编就为您讲述让小程序的text自动换行的方法详解,一起来看看吧。,"
-      },
-      {
-        id: "003",
-        imageSrc: "../../images/Flag.png",
-        name: "JUne",
-        text: "留言测试3"
       },
     ]
   },
@@ -41,19 +29,44 @@ Page({
   //获取用户信息
   onInfo:function(e){
     console.log(e.detail.userInfo)
-    // message.add({
-    //   data:{
-    //     imageSrc: e.detail.userInfo.avatarUrl,
-    //     name: e.detail.userInfo.nickName,
-    //   }
-    // })
+    this.setData({
+      imageSrc: e.detail.userInfo.avatarUrl,
+      name: e.detail.userInfo.nickName,
+    })
   },
  
-
   //提交留言
   onSubmit:function(e){
-    console.log(e.detail);
+    console.log(e.detail.value.msgInput);
+    message.add({
+      data: {
+        imageSrc: this.data.imageSrc,
+        name: this.data.name,
+        text: e.detail.value.msgInput,
+      }
+    }).then(res => {
+      wx.showToast({
+        title: "留言成功",
+        icon: "success",
+        success: res2 => {
+          this.setData({
+            textValue: ""
+          });
+          this.getData();
+        }
+      })
+    })
+  },
 
+  // 页面刷新
+  getData:function(e){
+    db.collection('message').get().then(res => {
+      console.log(res.data)
+      this.setData({
+        msgList: res.data,
+        loading: false
+      })
+    })
   },
 
   //监听记录输入字数
@@ -73,12 +86,17 @@ Page({
     this.setData({ show: false });
   },
 
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
+  // 监听页面加载
   onLoad: function (options) {
+    this.getData();
+  },
 
+  // 监听下拉
+  onPullDownRefresh: function () {
+    this.getData();
+    this.setData({
+      loading: true
+    });
   },
 
   /**
@@ -109,12 +127,7 @@ Page({
 
   },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
 
-  },
 
   /**
    * 页面上拉触底事件的处理函数
