@@ -1,12 +1,11 @@
 <!-- 留言按钮 -->
-<view class="leaveBtn">
+<view wx:if='{{authority}}' class="leaveBtn">
   <van-button
   type="primary" 
   size="large"
   round
   open-type="getUserInfo"
   bindgetuserinfo="onInfo"
-  bindtap="showPopup"
  >留言</van-button>
 </view>
 <van-divider hairline/>

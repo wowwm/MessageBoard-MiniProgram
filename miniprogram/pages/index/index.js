@@ -1,20 +1,22 @@
 //连接数据库
 const db = wx.cloud.database();
 const message = db.collection("message");
+const author = db.collection("author");
 
 Page({
 
   data: {
-    show: false,
     maxNumber: 140,//可输入最大字数
     number: 0,//已输入字数
-    loading: true,
+    
+    show: false,  //是否展示弹出面板
+    authority: false, //鉴权
+    loading: true,  //是否正在加载
     textValue:"",
 
     //留言数据
     name:"",
     imageSrc:"",
-    text:"",
 
     msgList:[
       {
@@ -29,15 +31,39 @@ Page({
   //获取用户信息
   onInfo:function(e){
     console.log(e.detail.userInfo)
-    this.setData({
-      imageSrc: e.detail.userInfo.avatarUrl,
-      name: e.detail.userInfo.nickName,
+    if (e.detail.errMsg === "getUserInfo:ok"){
+      this.showPopup()
+      this.setData({
+        imageSrc: e.detail.userInfo.avatarUrl,
+        name: e.detail.userInfo.nickName,
+      })
+    }
+  },
+
+  //判断用户权限
+  authentication:function(){   
+    wx.cloud.callFunction({
+      name: 'login',
+      complete: res => {
+        db.collection('author').get().then(res2 => {
+          // console.log(res.result.userInfo.openId)
+          // console.log(res2.data[0]._openid)
+          if (res.result.userInfo.openId === res2.data[0]._openid){
+            this.setData({
+              authority:true
+            })
+          }
+        })
+      }
     })
   },
+
+
+
  
   //提交留言
   onSubmit:function(e){
-    console.log(e.detail.value.msgInput);
+    // console.log(e.detail.value.msgInput);
     message.add({
       data: {
         imageSrc: this.data.imageSrc,
@@ -58,7 +84,7 @@ Page({
     })
   },
 
-  // 页面刷新
+  // 页面刷新获取数据
   getData:function(e){
     db.collection('message').get().then(res => {
       console.log(res.data)
@@ -89,6 +115,7 @@ Page({
   // 监听页面加载
   onLoad: function (options) {
     this.getData();
+    this.authentication();
   },
 
   // 监听下拉
