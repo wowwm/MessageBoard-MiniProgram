@@ -1,0 +1,57 @@
+<!-- 留言按钮 -->
+<view class="leaveBtn">
+  <van-button
+  type="primary" 
+  size="large"
+  round
+  open-type="getUserInfo"
+  bindgetuserinfo="onInfo"
+  bindtap="showPopup"
+ >留言</van-button>
+</view>
+<van-divider hairline/>
+
+<!-- 留言内容 -->
+<view wx:for="{{msgList}}" wx:key="id" class="msgContent">
+  <view class="imgView">
+    <image src = "{{item.imageSrc}}" class = "headImg"></image>
+  </view>
+  <view class='msgText'>
+    <text>{{item.name}}</text>
+    <text>{{item.text}}</text>
+  </view>
+</view>
+
+<!-- 留言弹窗 -->
+<van-popup
+  show="{{ show }}" 
+  bind:close="onClose"
+  position="bottom"
+  custom-style="height: 70%;"
+  round="true"
+ >
+`
+  <!-- 提交留言 -->
+<form bindsubmit="onSubmit">
+  <view class="writeView">
+    <van-cell-group>
+      <van-cell title="请留言"/>
+    </van-cell-group>
+    <view class="textArea">
+      <textarea
+        style="height: 10em" 
+        maxlength="{{maxNumber}}" 
+        placeholder="请输入留言内容" 
+        placeholder-style="color:gray;"
+        name="msgInput"
+        bindinput='inputText'/>
+      <span class="wordWrap">{{number}}/{{maxNumber}}</span>
+    </view>
+  </view>
+  <view class='submitBtnView'>
+    <button type="primary" formType="submit" plain="true">提交留言</button>
+  </view>
+</form>
+
+    
+ </van-popup>

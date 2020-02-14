@@ -1,0 +1,43 @@
+.leaveBtn{
+  width: 90%;
+  height: 100rpx;
+  margin:5%
+}
+.imgView{
+  width: 15%
+}
+.headImg{
+  width: 70rpx;
+  height: 70rpx;
+  margin:20rpx;
+}
+.msgContent{
+  display: flex;
+  width: 100%;
+  border-bottom: 1rpx solid #eee;
+  margin-bottom: 20rpx;
+}
+.msgText{
+   display: flex;
+   flex-direction: column;
+   width: 90%;
+   margin-bottom: 30rpx;
+   word-wrap:break-word
+}
+.textArea{
+  background-color: #F6F6F6;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  box-sizing: content-box;
+  padding: 20rpx;
+  position: relative;
+}
+.wordWrap {
+  position: absolute;
+  right: 12rpx;
+  bottom: 12rpx;
+}
+.submitBtnView{
+  margin: 20rpx;
+}
+
