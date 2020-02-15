@@ -41,9 +41,9 @@
     </view>
     <!-- 按钮部分 -->
     <view class = "manageBtn" wx:if='{{authority}}'>
-      <van-button size="mini" plain bindtap="toTop" data-pageid='{{item._id}}' data-pagedata='{{item}}'>置顶</van-button>
-      <van-button size="mini" plain bindtap="showRe" data-pageId='{{item._id}}'>回复</van-button>
-      <van-button size="mini" type="danger" plain bindtap='delect' data-pageId='{{item._id}}'>删除</van-button>
+      <van-button size="mini" plain bindtap="toTop" data-msgid='{{item._id}}' data-msgdata='{{item}}'>置顶</van-button>
+      <van-button size="mini" plain bindtap="showRe" data-msgId='{{item._id}}'>回复</van-button>
+      <van-button size="mini" type="danger" plain bindtap='delect' data-msgId='{{item._id}}'>删除</van-button>
     </view>
   </block>
 </van-skeleton>

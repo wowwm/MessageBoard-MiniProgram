@@ -42,6 +42,7 @@
 }
 .nameText{
   color: gray;
+  font-weight: 600;
   margin-right: 15rpx;
   margin-bottom: 3rpx;
 }

@@ -14,7 +14,7 @@ Page({
     authority: false, //鉴权
     loading: true,  //是否正在加载
     textValue:"",
-    replyPageId:"",
+    replyMsgId:"",
 
     //留言数据
     name:"",
@@ -25,26 +25,32 @@ Page({
 
   // 置顶
   toTop:function(e){
-    // console.log(e.currentTarget.dataset.pageid)
-    if (!e.currentTarget.dataset.pagedata.top){
-      db.collection('message').doc(e.currentTarget.dataset.pageid).update({
+    if (!e.currentTarget.dataset.msgdata.top) {
+      wx.cloud.callFunction({
+        name: 'toTop',
         data: {
-          top: true
-        },
-      })
+          id: e.currentTarget.dataset.msgid,
+        }
+      }).then(console.log)
     }else{
-      db.collection('message').doc(e.currentTarget.dataset.pageid).update({
+      wx.cloud.callFunction({
+        name: 'notTop',
         data: {
-          top: false
-        },
-      })
+          id: e.currentTarget.dataset.msgid,
+        }
+      }).then(console.log)
     }
   },
 
   //删除
   delect:function(e){
-    // console.log(e.currentTarget.dataset.pageid)
-    db.collection('message').doc(e.currentTarget.dataset.pageid).remove()
+    console.log(e.currentTarget.dataset.msgid)
+    wx.cloud.callFunction({
+      name: 'delect',
+      data:{
+        id: e.currentTarget.dataset.msgid,
+      }
+    }).then(console.log)
   },
   
   
@@ -80,11 +86,12 @@ Page({
 
   //提交回复
   reSubmit: function (e) {
-    console.log(e.currentTarget.dataset.pageid)
-    db.collection('message').doc(this.data.replyPageId).update({
+    wx.cloud.callFunction({
+      name: 'reply',
       data: {
+        id: this.data.replyMsgId,
         reply: e.detail.value.msgInput,
-      },
+      }
     }).then(res => {
       wx.showToast({
         title: "回复成功",
@@ -152,7 +159,7 @@ Page({
   showRe(e){
     this.setData({
       showReply: true ,
-      replyPageId: e.currentTarget.dataset.pageid
+      replyMsgId: e.currentTarget.dataset.msgid
     });
   },
   closeRe() {
