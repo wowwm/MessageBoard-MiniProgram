@@ -131,10 +131,12 @@ Page({
 
   // 页面刷新获取数据
   getData:function(e){
-    db.collection('message').get().then(res => {
-      console.log(res.data)
+    wx.cloud.callFunction({
+      name: 'getData',
+    }).then(res => {
+      console.log(res.result.data)
       this.setData({
-        msgList: res.data,
+        msgList: res.result.data,
         loading: false
       })
     })

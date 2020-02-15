@@ -17,7 +17,38 @@
   row="3"
   loading="{{loading}}"
 >
-  <block wx:for="{{msgList}}" wx:key="_id">
+  <!-- 置顶板块 -->
+  <block wx:for="{{msgList}}" wx:key="_id" wx:if='{{item.top}}'>
+    <view class="msgContent">
+      <!-- 头像部分 -->
+      <view class="imgView">
+        <image src = "{{item.imageSrc}}" class = "headImg"></image>
+      </view>
+      <!-- 内容部分 -->
+      <view class='msgText'>
+        <view class = 'nameView'>
+          <text class='nameText'>{{item.name}}</text>
+          <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
+        </view>
+        <text>{{item.text}}</text>
+        <view class = 'replyView' wx:if='{{item.reply}}'>
+          <view>
+            <text style="color:green;font-weight:800">> </text>
+            <text style="color:gray">作者回复</text>
+          </view>
+          <text>{{item.reply}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 按钮部分 -->
+    <view class = "manageBtn" wx:if='{{authority}}'>
+      <van-button size="mini" plain bindtap="toTop" data-msgid='{{item._id}}' data-msgdata='{{item}}'>置顶</van-button>
+      <van-button size="mini" plain bindtap="showRe" data-msgId='{{item._id}}'>回复</van-button>
+      <van-button size="mini" type="danger" plain bindtap='delect' data-msgId='{{item._id}}'>删除</van-button>
+    </view>
+  </block>
+  <!-- 普通板块 -->
+  <block wx:for="{{msgList}}" wx:key="_id" wx:if='{{!item.top}}'>
     <view class="msgContent">
       <!-- 头像部分 -->
       <view class="imgView">
