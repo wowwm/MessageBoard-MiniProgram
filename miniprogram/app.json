@@ -12,10 +12,10 @@
   "usingComponents": {
     "van-button": "@vant/weapp/button",
     "van-popup": "@vant/weapp/popup",
-    "van-divider": "@vant/weapp/divider",
     "van-cell": "@vant/weapp/cell",
     "van-cell-group": "@vant/weapp/cell-group",
-    "van-skeleton": "@vant/weapp/skeleton"
+    "van-skeleton": "@vant/weapp/skeleton",
+    "van-tag": "@vant/weapp/tag"
   },
   "sitemapLocation": "sitemap57.json"
 }

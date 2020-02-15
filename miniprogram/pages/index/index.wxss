@@ -1,7 +1,18 @@
 .leaveBtn{
   width: 90%;
   height: 100rpx;
-  margin:5%
+  margin:5%;
+  margin-bottom: 2%;
+}
+.remind{
+  display: flex;
+  justify-content: center;  
+  color: lightgray;
+  font-size: 25rpx;
+}
+.manageBtn{
+  display: flex;
+  justify-content: space-around;  
 }
 .imgView{
   width: 15%
@@ -14,7 +25,7 @@
 .msgContent{
   display: flex;
   width: 100%;
-  border-bottom: 1rpx solid #eee;
+  border-top: 1rpx solid #eee;
   margin-bottom: 10rpx;
 }
 .msgText{
@@ -24,8 +35,20 @@
   padding: 20rpx;
   word-wrap:break-word
 }
+.nameView{
+  display: flex;
+  flex-direction: row;
+}
 .nameText{
-  font-weight: 600;
+  color: gray;
+  margin-right: 15rpx;
+  margin-bottom: 3rpx;
+}
+.replyView{
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
 }
 .textArea{
   background-color: #F6F6F6;

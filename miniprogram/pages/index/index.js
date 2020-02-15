@@ -58,7 +58,10 @@ Page({
     })
   },
 
-
+  // 留言管理
+  toManage:function(){
+    
+  },
 
  
   //提交留言
