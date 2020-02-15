@@ -27,23 +27,23 @@
       <view class='msgText'>
         <view class = 'nameView'>
           <text class='nameText'>{{item.name}}</text>
-          <van-tag plain mark>置顶</van-tag>
+          <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
         </view>
-        <text style="width:90%">{{item.text}}</text>
-        <view class = 'replyView'>
+        <text>{{item.text}}</text>
+        <view class = 'replyView' wx:if='{{item.reply}}'>
           <view>
-            <text style="color:green;font-weight:800">>> </text>
+            <text style="color:green;font-weight:800">> </text>
             <text style="color:gray">作者回复</text>
           </view>
-          <text>hhhhhhhhhhhMMMMM333333333333FFFFFFFMhhhhh</text>
+          <text>{{item.reply}}</text>
         </view>
-        
       </view>
     </view>
+    <!-- 按钮部分 -->
     <view class = "manageBtn" wx:if='{{authority}}'>
-      <van-button size="mini" plain>置顶</van-button>
-      <van-button size="mini" plain>回复</van-button>
-      <van-button size="mini" type="danger" plain>删除</van-button>
+      <van-button size="mini" plain bindtap="toTop" data-pageid='{{item._id}}' data-pagedata='{{item}}'>置顶</van-button>
+      <van-button size="mini" plain bindtap="showRe" data-pageId='{{item._id}}'>回复</van-button>
+      <van-button size="mini" type="danger" plain bindtap='delect' data-pageId='{{item._id}}'>删除</van-button>
     </view>
   </block>
 </van-skeleton>
@@ -75,6 +75,36 @@
     </view>
     <view class='submitBtnView'>
       <button type="primary" formType="submit" plain="true">提交留言</button>
+    </view>
+  </form>
+
+</van-popup>
+
+<!-- 回复弹窗 未完成 -->
+<van-popup
+  show="{{ showReply }}" 
+  bind:close="closeRe"
+  position="top"
+  custom-style="height: 50%;"
+  round
+  closeable
+ >
+  <!-- 提交回复 -->
+  <form bindsubmit="reSubmit">
+    <view class="writeView">
+      <van-cell title="请回复"/>
+      <view class="textArea">
+        <textarea
+          value="{{textValue}}"
+          style="height: 8em" 
+          maxlength="{{maxNumber}}" 
+          name="msgInput"
+          bindinput='inputText'/>
+        <span class="wordWrap">{{number}}/{{maxNumber}}</span>
+      </view>
+    </view>
+    <view class='submitBtnView'>
+      <button type="primary" formType="submit" plain="true" >提交回复</button>
     </view>
   </form>
 

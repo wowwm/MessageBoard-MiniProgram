@@ -24,6 +24,7 @@
 }
 .msgContent{
   display: flex;
+  justify-content: center;  
   width: 100%;
   border-top: 1rpx solid #eee;
   margin-bottom: 10rpx;
@@ -33,7 +34,7 @@
   flex-direction: column;
   width: 90%;
   padding: 20rpx;
-  word-wrap:break-word
+  word-wrap:break-word;
 }
 .nameView{
   display: flex;
@@ -48,7 +49,7 @@
   margin-top: 10rpx;
   display: flex;
   flex-direction: column;
-  width: 90%;
+  word-wrap:break-word;
 }
 .textArea{
   background-color: #F6F6F6;

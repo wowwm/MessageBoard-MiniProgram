@@ -9,25 +9,45 @@ Page({
     maxNumber: 140,//可输入最大字数
     number: 0,//已输入字数
     
-    show: false,  //是否展示弹出面板
+    show: false,  //是否弹出留言面板
+    showReply: false, //是否弹出回复面板
     authority: false, //鉴权
     loading: true,  //是否正在加载
     textValue:"",
+    replyPageId:"",
 
     //留言数据
     name:"",
     imageSrc:"",
 
-    msgList:[
-      {
-        _id:"001",
-        imageSrc:"../../images/Rock.png",
-        name:"Mengo",
-        text:"留言测试1"
-      },
-    ]
+    msgList:[]
   },
 
+  // 置顶
+  toTop:function(e){
+    // console.log(e.currentTarget.dataset.pageid)
+    if (!e.currentTarget.dataset.pagedata.top){
+      db.collection('message').doc(e.currentTarget.dataset.pageid).update({
+        data: {
+          top: true
+        },
+      })
+    }else{
+      db.collection('message').doc(e.currentTarget.dataset.pageid).update({
+        data: {
+          top: false
+        },
+      })
+    }
+  },
+
+  //删除
+  delect:function(e){
+    // console.log(e.currentTarget.dataset.pageid)
+    db.collection('message').doc(e.currentTarget.dataset.pageid).remove()
+  },
+  
+  
   //获取用户信息
   onInfo:function(e){
     console.log(e.detail.userInfo)
@@ -58,11 +78,26 @@ Page({
     })
   },
 
-  // 留言管理
-  toManage:function(){
-    
+  //提交回复
+  reSubmit: function (e) {
+    console.log(e.currentTarget.dataset.pageid)
+    db.collection('message').doc(this.data.replyPageId).update({
+      data: {
+        reply: e.detail.value.msgInput,
+      },
+    }).then(res => {
+      wx.showToast({
+        title: "回复成功",
+        icon: "success",
+        success: res2 => {
+          this.setData({
+            textValue: ""
+          });
+          this.getData();
+        }
+      })
+    })
   },
-
  
   //提交留言
   onSubmit:function(e){
@@ -114,6 +149,16 @@ Page({
   onClose() {
     this.setData({ show: false });
   },
+  showRe(e){
+    this.setData({
+      showReply: true ,
+      replyPageId: e.currentTarget.dataset.pageid
+    });
+  },
+  closeRe() {
+    this.setData({ showReply: false });
+  },
+
 
   // 监听页面加载
   onLoad: function (options) {
