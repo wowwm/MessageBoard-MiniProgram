@@ -1,13 +1,15 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/msgPages/msgPages"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "WhiteApple 留言板",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
   },
   "usingComponents": {
     "van-button": "@vant/weapp/button",
@@ -18,4 +20,5 @@
     "van-tag": "@vant/weapp/tag"
   },
   "sitemapLocation": "sitemap57.json"
+  
 }

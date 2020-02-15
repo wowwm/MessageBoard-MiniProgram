@@ -1,0 +1,141 @@
+<!-- 留言按钮 -->
+<view class="leaveBtn">
+  <van-button
+  type="primary" 
+  size="large"
+  round
+  open-type="getUserInfo"
+  bindgetuserinfo="onInfo"
+ >留言</van-button>
+</view>
+<text class='remind' wx:if='{{authority}}'>您是管理员，可管理留言</text>
+
+<!-- 留言内容 -->
+<van-skeleton
+  title
+  avatar
+  row="3"
+  loading="{{loading}}"
+>
+  <!-- 置顶板块 -->
+  <block wx:for="{{msgList}}" wx:key="_id" wx:if='{{item.top}}'>
+    <view class="msgContent">
+      <!-- 头像部分 -->
+      <view class="imgView">
+        <image src = "{{item.imageSrc}}" class = "headImg"></image>
+      </view>
+      <!-- 内容部分 -->
+      <view class='msgText'>
+        <view class = 'nameView'>
+          <text class='nameText'>{{item.name}}</text>
+          <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
+        </view>
+        <text>{{item.text}}</text>
+        <view class = 'replyView' wx:if='{{item.reply}}'>
+          <view>
+            <text style="color:green;font-weight:800">> </text>
+            <text style="color:gray">作者回复</text>
+          </view>
+          <text>{{item.reply}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 按钮部分 -->
+    <view class = "manageBtn" wx:if='{{authority}}'>
+      <van-button size="mini" plain bindtap="toTop" data-msgid='{{item._id}}' data-msgdata='{{item}}'>置顶</van-button>
+      <van-button size="mini" plain bindtap="showRe" data-msgId='{{item._id}}'>回复</van-button>
+      <van-button size="mini" type="danger" plain bindtap='delect' data-msgId='{{item._id}}'>删除</van-button>
+    </view>
+  </block>
+  <!-- 普通板块 -->
+  <block wx:for="{{msgList}}" wx:key="_id" wx:if='{{!item.top}}'>
+    <view class="msgContent">
+      <!-- 头像部分 -->
+      <view class="imgView">
+        <image src = "{{item.imageSrc}}" class = "headImg"></image>
+      </view>
+      <!-- 内容部分 -->
+      <view class='msgText'>
+        <view class = 'nameView'>
+          <text class='nameText'>{{item.name}}</text>
+          <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
+        </view>
+        <text>{{item.text}}</text>
+        <view class = 'replyView' wx:if='{{item.reply}}'>
+          <view>
+            <text style="color:green;font-weight:800">> </text>
+            <text style="color:gray">作者回复</text>
+          </view>
+          <text>{{item.reply}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 按钮部分 -->
+    <view class = "manageBtn" wx:if='{{authority}}'>
+      <van-button size="mini" plain bindtap="toTop" data-msgid='{{item._id}}' data-msgdata='{{item}}'>置顶</van-button>
+      <van-button size="mini" plain bindtap="showRe" data-msgId='{{item._id}}'>回复</van-button>
+      <van-button size="mini" type="danger" plain bindtap='delect' data-msgId='{{item._id}}'>删除</van-button>
+    </view>
+  </block>
+</van-skeleton>
+
+<!-- 留言弹窗 -->
+<van-popup
+  show="{{ show }}" 
+  bind:close="onClose"
+  position="bottom"
+  custom-style="height: 70%;"
+  round
+  closeable
+ >
+  <!-- 提交留言 -->
+  <form bindsubmit="onSubmit">
+    <view class="writeView">
+      <van-cell title="请留言"/>
+      <view class="textArea">
+        <textarea
+          value="{{textValue}}"
+          style="height: 10em" 
+          maxlength="{{maxNumber}}" 
+          placeholder="请输入留言内容" 
+          placeholder-style="color:gray;"
+          name="msgInput"
+          bindinput='inputText'/>
+        <span class="wordWrap">{{number}}/{{maxNumber}}</span>
+      </view>
+    </view>
+    <view class='submitBtnView'>
+      <button type="primary" formType="submit" plain="true">提交留言</button>
+    </view>
+  </form>
+</van-popup>
+
+<!-- 回复弹窗 -->
+<van-popup
+  show="{{ showReply }}" 
+  bind:close="closeRe"
+  position="top"
+  custom-style="height: 50%;"
+  round
+  closeable
+ >
+  <!-- 提交回复 -->
+  <form bindsubmit="reSubmit">
+    <view class="writeView">
+      <van-cell title="请回复"/>
+      <view class="textArea">
+        <textarea
+          value="{{textValue}}"
+          style="height: 8em" 
+          maxlength="{{maxNumber}}" 
+          name="msgInput"
+          bindinput='inputText'/>
+        <span class="wordWrap">{{number}}/{{maxNumber}}</span>
+      </view>
+    </view>
+    <view class='submitBtnView'>
+      <button type="primary" formType="submit" plain="true" >提交回复</button>
+    </view>
+  </form>
+
+</van-popup>

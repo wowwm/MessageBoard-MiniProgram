@@ -1,123 +1,34 @@
 //连接数据库
 const db = wx.cloud.database();
-const message = db.collection("message");
+const msgpages = db.collection("msgpages");
 const author = db.collection("author");
-
 Page({
 
+
   data: {
-    maxNumber: 140,//可输入最大字数
-    number: 0,//已输入字数
-    
+    authority: false,
     show: false,  //是否弹出留言面板
-    showReply: false, //是否弹出回复面板
-    authority: false, //鉴权
+    textValue: "",
     loading: true,  //是否正在加载
-    textValue:"",
-    replyMsgId:"",
 
-    //留言数据
-    name:"",
-    imageSrc:"",
-
-    msgList:[]
+    pageList:[]
   },
 
-  // 置顶
-  toTop:function(e){
-    if (!e.currentTarget.dataset.msgdata.top) {
-      wx.cloud.callFunction({
-        name: 'toTop',
-        data: {
-          id: e.currentTarget.dataset.msgid,
-        }
-      }).then(console.log)
-    }else{
-      wx.cloud.callFunction({
-        name: 'notTop',
-        data: {
-          id: e.currentTarget.dataset.msgid,
-        }
-      }).then(console.log)
-    }
+  newPage:function(e){
+    
   },
 
-  //删除
-  delect:function(e){
-    console.log(e.currentTarget.dataset.msgid)
-    wx.cloud.callFunction({
-      name: 'delect',
-      data:{
-        id: e.currentTarget.dataset.msgid,
-      }
-    }).then(console.log)
-  },
-  
-  
-  //获取用户信息
-  onInfo:function(e){
-    console.log(e.detail.userInfo)
-    if (e.detail.errMsg === "getUserInfo:ok"){
-      this.showPopup()
-      this.setData({
-        imageSrc: e.detail.userInfo.avatarUrl,
-        name: e.detail.userInfo.nickName,
-      })
-    }
-  },
-
-  //判断用户权限
-  authentication:function(){   
-    wx.cloud.callFunction({
-      name: 'login',
-      complete: res => {
-        db.collection('author').get().then(res2 => {
-          // console.log(res.result.userInfo.openId)
-          // console.log(res2.data[0]._openid)
-          if (res.result.userInfo.openId === res2.data[0]._openid){
-            this.setData({
-              authority:true
-            })
-          }
-        })
-      }
-    })
-  },
-
-  //提交回复
-  reSubmit: function (e) {
-    wx.cloud.callFunction({
-      name: 'reply',
+  //提交创建新页面
+  onSubmit: function (e) {
+    console.log(e.detail.value.msgInput);
+    msgpages.add({
       data: {
-        id: this.data.replyMsgId,
-        reply: e.detail.value.msgInput,
+        name: e.detail.value.pageName,
+        discribe: e.detail.value.pageDiscribe,
       }
     }).then(res => {
       wx.showToast({
-        title: "回复成功",
-        icon: "success",
-        success: res2 => {
-          this.setData({
-            textValue: ""
-          });
-          this.getData();
-        }
-      })
-    })
-  },
- 
-  //提交留言
-  onSubmit:function(e){
-    // console.log(e.detail.value.msgInput);
-    message.add({
-      data: {
-        imageSrc: this.data.imageSrc,
-        name: this.data.name,
-        text: e.detail.value.msgInput,
-      }
-    }).then(res => {
-      wx.showToast({
-        title: "留言成功",
+        title: "新建成功",
         icon: "success",
         success: res2 => {
           this.setData({
@@ -130,24 +41,35 @@ Page({
   },
 
   // 页面刷新获取数据
-  getData:function(e){
+  getData: function (e) {
     wx.cloud.callFunction({
       name: 'getData',
+      data: {
+        db: 'msgpages',
+        id: null,
+      }
     }).then(res => {
       console.log(res.result.data)
       this.setData({
-        msgList: res.result.data,
+        pageList: res.result.data,
         loading: false
       })
     })
   },
 
-  //监听记录输入字数
-  inputText: function (e) {
-    let value = e.detail.value;
-    let len = value.length;
-    this.setData({
-      'number': len
+  //判断用户权限
+  authentication: function () {
+    wx.cloud.callFunction({
+      name: 'login',
+      complete: res => {
+        db.collection('author').get().then(res2 => {
+          if (res.result.userInfo.openId === res2.data[0]._openid) {
+            this.setData({
+              authority: true
+            })
+          }
+        })
+      }
     })
   },
 
@@ -158,29 +80,17 @@ Page({
   onClose() {
     this.setData({ show: false });
   },
-  showRe(e){
-    this.setData({
-      showReply: true ,
-      replyMsgId: e.currentTarget.dataset.msgid
-    });
-  },
-  closeRe() {
-    this.setData({ showReply: false });
-  },
 
-
-  // 监听页面加载
   onLoad: function (options) {
     this.getData();
     this.authentication();
   },
 
-  // 监听下拉
   onPullDownRefresh: function () {
-    this.getData();
     this.setData({
       loading: true
     });
+    this.getData();
   },
 
   /**
@@ -210,7 +120,6 @@ Page({
   onUnload: function () {
 
   },
-
 
 
   /**

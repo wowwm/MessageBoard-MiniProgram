@@ -4,3 +4,20 @@ page {
   font-size: 30rpx;
   line-height: 1.6;
 }
+.remind{
+  display: flex;
+  justify-content: center;  
+  color: rgb(153, 153, 153);
+  font-size: 25rpx;
+}
+.textArea{
+  background-color: #F6F6F6;
+  margin: 20rpx;
+  border-radius: 16rpx;
+  box-sizing: content-box;
+  padding: 20rpx;
+  position: relative;
+}
+.submitBtnView{
+  margin: 20rpx;
+}
