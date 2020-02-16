@@ -15,6 +15,7 @@ Page({
     loading: true,  //是否正在加载
     textValue:"",
     replyMsgId:"",
+    qr:"",
 
     //留言数据
     pageId:"",
@@ -198,6 +199,37 @@ Page({
     this.setData({ showReply: false });
   },
 
+  //获得小程序码
+  getQ:function(e){
+    wx.cloud.callFunction({
+      name: 'getQ',
+      data: {
+        path: wx.getClipboardData(),
+        id: this.data.pageId,
+      }
+    }).then(res =>{
+      this.setData({
+        qr:res.result.fileID
+      })
+      console.log(res)
+      console.log(this.data.qr)
+    })
+  },
+
+
+  //复制页面路径
+  copyPage:function(e){
+    wx.setClipboardData({
+      data: `pages/msgPages/msgPages?id=${this.data.pageId}`,
+      // success(res) {
+      //   wx.getClipboardData({
+      //     success(res) {
+      //       console.log(res.data) // data
+      //     }
+      //   })
+      // }
+    })
+  },
 
   // 监听页面加载
   onLoad: function (options) {

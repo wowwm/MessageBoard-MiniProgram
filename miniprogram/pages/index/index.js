@@ -54,6 +54,7 @@ Page({
         pageList: res.result.data,
         loading: false
       })
+      // wx.stopPullDownRefresh
     })
   },
 

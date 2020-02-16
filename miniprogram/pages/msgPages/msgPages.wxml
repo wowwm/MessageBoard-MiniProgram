@@ -8,7 +8,8 @@
   bindgetuserinfo="onInfo"
  >留言</van-button>
 </view>
-<text class='remind' wx:if='{{authority}}'>您是管理员，可管理留言</text>
+<van-cell wx:if='{{authority}}' label="您是管理员，可编辑留言，点击此处可复制页面路径" bindtap='copyPage'/>
+<van-cell wx:if='{{authority}}' label="生成当前页面小程序码，请点击上方复制路径后轻点此处" bindtap='getQ'/>
 
 <!-- 留言内容 -->
 <van-skeleton
@@ -139,3 +140,5 @@
   </form>
 
 </van-popup>
+
+<image src='{{qr}}' style="width:750rpx;height:750rpx"></image>

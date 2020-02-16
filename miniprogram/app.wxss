@@ -9,6 +9,7 @@ page {
   justify-content: center;  
   color: rgb(153, 153, 153);
   font-size: 25rpx;
+  width: 90%;
 }
 .textArea{
   background-color: #F6F6F6;
