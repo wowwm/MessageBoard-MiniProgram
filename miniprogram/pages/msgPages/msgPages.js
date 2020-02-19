@@ -230,7 +230,7 @@ Page({
         db:'message',
       }
     }).then(res => {
-      // console.log(res.result.data)
+      console.log(res.result.data)
       this.setData({
         msgList: res.result.data,
         loading: false
