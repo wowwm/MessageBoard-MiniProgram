@@ -46,6 +46,12 @@
   font-size:30rpx;
   color:lightslategray;
 }
+.delectView{
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+  font-size: 25rpx;
+  color: gray;
+}
 .replyView{
   margin-top: 10rpx;
   display: flex;

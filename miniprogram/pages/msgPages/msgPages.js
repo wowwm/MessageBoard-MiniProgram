@@ -269,7 +269,7 @@ Page({
     wx.cloud.callFunction({
       name: 'getQ',
       data: {
-        path: wx.getClipboardData(),
+        path: `pages/msgPages/msgPages?id=${this.data.pageId}`,
         id: this.data.pageId,
       }
     }).then(res =>{
