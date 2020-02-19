@@ -32,13 +32,19 @@
 }
 .nameView{
   display: flex;
-  flex-direction: row;
+  justify-content:space-between;
 }
 .nameText{
-  color: gray;
-  font-weight: 600;
+  color:gray;
+  font-weight: 550;
   margin-right: 15rpx;
   margin-bottom: 3rpx;
+}
+.goodCount{
+  margin-left: 5rpx;
+  margin-right: 5rpx;
+  font-size:30rpx;
+  color:lightslategray;
 }
 .replyView{
   margin-top: 10rpx;

@@ -21,6 +21,7 @@ Page({
     pageId:"",
     name:"",
     imageSrc:"",
+    goodCount:0,
 
     msgList:[]
   },
@@ -141,6 +142,7 @@ Page({
         name: this.data.name,
         text: e.detail.value.msgInput,
         pageId:this.data.pageId,
+        good: false, //判断有无人点赞
       }
     }).then(res => {
       wx.showToast({
@@ -152,6 +154,31 @@ Page({
           });
           this.getData();
         }
+      })
+    })
+  },
+
+//点赞
+  tapGood:function(e){
+    console.log(e.currentTarget.dataset.msgid)
+    wx.cloud.callFunction({
+      name: 'getCount',
+      data: {
+        id: e.currentTarget.dataset.msgid,
+      }
+    }).then(res =>{
+      if (res.result.data.goodCount == null){
+        res.result.data.goodCount=0;
+      }
+      wx.cloud.callFunction({
+        name: 'tapGood',
+        data: {
+          id: e.currentTarget.dataset.msgid,
+          count: Number(res.result.data.goodCount) + 1,
+        }
+      }).then(res => {
+        console.log(res)
+        this.getData()
       })
     })
   },

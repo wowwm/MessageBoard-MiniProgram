@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   try {
     return await db.collection('message').doc(event.id).update({
       data: {
-        top: true
+        top: true,
       },
     })
   } catch (e) {

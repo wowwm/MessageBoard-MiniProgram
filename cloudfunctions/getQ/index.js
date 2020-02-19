@@ -7,8 +7,8 @@ const {
 
 cloud.init()
 
-const appId = 'wx4cc8******'; // 小程序 appId
-const secret = '8d3409722de0b26*****'; // 小程序 secret
+const appId = 'wx4cc83a83e0787404'; // 小程序 appId
+const secret = '8d3409722de0b26c83d110e82085f210'; // 小程序 secret
 
 
 exports.main = async (event, context) => {
@@ -25,11 +25,11 @@ exports.main = async (event, context) => {
 
   let qrResult = await wXMINIQR.getMiniQRLimit({
     access_token,
-    path:`${event.path}`
+    path:'pages/msgPages/msgPages?id=ebeb6445-d8b2-4f45-8121-eeee1e74916e'
   });
 
   return await cloud.uploadFile({
-    cloudPath:`${event.id}.png`,
+    cloudPath:`${event.id}.jpg`,
     fileContent: qrResult
   })
 }

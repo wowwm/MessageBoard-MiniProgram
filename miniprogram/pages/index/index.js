@@ -14,10 +14,6 @@ Page({
     pageList:[]
   },
 
-  newPage:function(e){
-    
-  },
-
   //提交创建新页面
   onSubmit: function (e) {
     console.log(e.detail.value.msgInput);

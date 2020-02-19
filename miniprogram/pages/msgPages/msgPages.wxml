@@ -28,16 +28,39 @@
       <!-- 内容部分 -->
       <view class='msgText'>
         <view class = 'nameView'>
-          <text class='nameText'>{{item.name}}</text>
-          <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
+          <view>
+            <text class='nameText'>{{item.name}}</text>
+            <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
+          </view>
+          <!-- 点赞功能 -->
+          <view wx:if='{{item.good}}' style="display: flex;">
+            <van-icon 
+              name="good-job" 
+              size="45rpx" 
+              color="lightslategray"/>
+            <view class='goodCount'>
+              <text>{{item.goodCount}}</text>
+            </view>
+          </view>
+          <view wx:else style="display: flex;">
+            <van-icon
+              name="good-job-o"
+              size="45rpx"
+              color="lightslategray"
+              bind:click="tapGood"
+              data-msgId='{{item._id}}'/>
+            <view class='goodCount'>
+              <text>{{item.goodCount}}</text>
+            </view>
+          </view>
         </view>
-        <text>{{item.text}}</text>
+        <text selectable="{{true}}">{{item.text}}</text>
         <view class = 'replyView' wx:if='{{item.reply}}'>
           <view>
             <text style="color:green;font-weight:800">> </text>
             <text style="color:gray">作者回复</text>
           </view>
-          <text>{{item.reply}}</text>
+          <text selectable="{{true}}">{{item.reply}}</text>
         </view>
       </view>
     </view>
@@ -58,16 +81,39 @@
       <!-- 内容部分 -->
       <view class='msgText'>
         <view class = 'nameView'>
-          <text class='nameText'>{{item.name}}</text>
-          <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
+          <view>
+            <text class='nameText'>{{item.name}}</text>
+            <van-tag mark  wx:if='{{item.top}}'>置顶</van-tag>
+          </view>
+          <!-- 点赞功能 -->
+          <view wx:if='{{item.good}}' style="display: flex;">
+            <van-icon
+              name="good-job"
+              size="45rpx"
+              color="lightslategray"/>
+            <view class='goodCount'>
+              <text>{{item.goodCount}}</text>
+            </view>
+          </view>
+          <view wx:else style="display: flex;">
+            <van-icon
+              name="good-job-o"
+              size="45rpx"
+              color="lightslategray"
+              bind:click="tapGood"
+              data-msgId='{{item._id}}'/>
+            <view class='goodCount'>
+              <text>{{item.goodCount}}</text>
+            </view>
+          </view>
         </view>
-        <text>{{item.text}}</text>
+        <text selectable="true">{{item.text}}</text>
         <view class = 'replyView' wx:if='{{item.reply}}'>
           <view>
             <text style="color:green;font-weight:800">> </text>
             <text style="color:gray">作者回复</text>
           </view>
-          <text>{{item.reply}}</text>
+          <text selectable="true">{{item.reply}}</text>
         </view>
       </view>
     </view>

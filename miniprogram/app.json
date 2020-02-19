@@ -7,7 +7,7 @@
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "WhiteApple 留言板",
+    "navigationBarTitleText": "留言板",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true
   },
@@ -17,7 +17,8 @@
     "van-cell": "@vant/weapp/cell",
     "van-cell-group": "@vant/weapp/cell-group",
     "van-skeleton": "@vant/weapp/skeleton",
-    "van-tag": "@vant/weapp/tag"
+    "van-tag": "@vant/weapp/tag",
+    "van-icon": "@vant/weapp/icon"
   },
   "sitemapLocation": "sitemap57.json"
   
