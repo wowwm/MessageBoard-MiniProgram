@@ -2,6 +2,7 @@
 const db = wx.cloud.database();
 const message = db.collection("message");
 const author = db.collection("author");
+const lessonSubId = 'wpWjGZ2n58TiFg_tkTpXj3zUhFjmeOaHwNVl1WmSOD4'; //订阅消息模板id
 
 Page({
 
@@ -16,6 +17,7 @@ Page({
     textValue:"",
     replyMsgId:"",
     qr:"",
+    userId:"",  //用户openid
 
     //留言数据
     pageId:"",
@@ -23,7 +25,7 @@ Page({
     imageSrc:"",
     goodCount:0,
 
-    msgList:[]
+    
   },
 
   // 置顶
@@ -98,10 +100,14 @@ Page({
     wx.cloud.callFunction({
       name: 'login',
       complete: res => {
+        // console.log(res)
+        this.setData({
+          userId: res.result.openid
+        })
         db.collection('author').get().then(res2 => {
-          // console.log(res.result.userInfo.openId)
+          // console.log(res.result.event.userInfo.openId)
           // console.log(res2.data[0]._openid)
-          if (res.result.userInfo.openId === res2.data[0]._openid){
+          if (res.result.openid === res2.data[0]._openid){
             this.setData({
               authority:true
             })
@@ -113,6 +119,17 @@ Page({
 
   //提交回复
   reSubmit: function (e) {
+    // console.log(e.detail.value.msgInput)
+    //订阅消息推送数据
+    const item = {
+      name1: {
+        value: '白小果本果'
+      },
+      phrase3: {
+        value: e.detail.value.msgInput
+      }
+    }
+    //回复
     wx.cloud.callFunction({
       name: 'reply',
       data: {
@@ -129,10 +146,42 @@ Page({
           });
           this.getData();
         }
-      })
+      });
+    })
+    // 通知
+    wx.cloud.callFunction({
+      name: 'replyPush',
+      data: {
+        data: item,
+        templateId: lessonSubId,
+        id: this.data.replyMsgId,
+        userId:this.data.userId,
+        page: `pages/msgPages/msgPages?id=${this.data.pageId}`
+      }
     })
   },
  
+  //允许订阅回复消息
+  subReply:function(e){
+    wx.requestSubscribeMessage({
+      tmplIds: [lessonSubId],
+      success:res => {
+        // console.log('已授权接收订阅消息')
+        wx.showToast({
+          title: "留言成功",
+          icon: "success",
+          success: res2 => {
+            this.setData({
+              textValue: ""
+            });
+            this.getData();
+          }
+        })  
+      }
+    })
+  },
+
+
   //提交留言
   onSubmit:function(e){
     // console.log(e.detail.value.msgInput);
@@ -144,17 +193,6 @@ Page({
         pageId:this.data.pageId,
         good: false, //判断有无人点赞
       }
-    }).then(res => {
-      wx.showToast({
-        title: "留言成功",
-        icon: "success",
-        success: res2 => {
-          this.setData({
-            textValue: ""
-          });
-          this.getData();
-        }
-      })
     })
   },
 
@@ -177,7 +215,7 @@ Page({
           count: Number(res.result.data.goodCount) + 1,
         }
       }).then(res => {
-        console.log(res)
+        // console.log(res)
         this.getData()
       })
     })
@@ -192,7 +230,7 @@ Page({
         db:'message',
       }
     }).then(res => {
-      console.log(res.result.data)
+      // console.log(res.result.data)
       this.setData({
         msgList: res.result.data,
         loading: false

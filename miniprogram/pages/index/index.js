@@ -60,7 +60,7 @@ Page({
       name: 'login',
       complete: res => {
         db.collection('author').get().then(res2 => {
-          if (res.result.userInfo.openId === res2.data[0]._openid) {
+          if (res.result.openid === res2.data[0]._openid) {
             this.setData({
               authority: true
             })

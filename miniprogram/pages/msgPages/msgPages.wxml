@@ -152,7 +152,7 @@
       </view>
     </view>
     <view class='submitBtnView'>
-      <button type="primary" formType="submit" plain="true">提交留言</button>
+      <button type="primary" formType="submit" plain="true" bindtap="subReply">提交留言</button>
     </view>
   </form>
 </van-popup>

@@ -54,10 +54,17 @@
 					"id": 0,
 					"name": "pages/msgPages/msgPages",
 					"pathName": "pages/msgPages/msgPages",
-					"query": "id=e8b1b114-58b6-4f8a-9a93-faa7ef17d369",
+					"query": "id=3435bf38-1ba6-4145-a8ce-0292e9c87fec",
 					"scene": null
 				}
 			]
 		}
-	}
+	},
+  
+  "permissions": {
+    "openapi": [
+      "subscribeMessage.send"
+    ]
+  }
+  
 }
